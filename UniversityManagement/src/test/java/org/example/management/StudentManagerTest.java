@@ -2,24 +2,30 @@ package org.example.management;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.verify;
 
 import org.example.datatype.Department;
+import org.example.db.UniversityDatabaseWrapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 
 class StudentManagerTest {
 
-    StudentManager studentManagerUnderTest;
+    private static MockedStatic<UniversityDatabaseWrapper> mockedStaticUniversityDatabaseWrapper;
+    private StudentManager studentManagerUnderTest;
 
     @BeforeEach
     void setUp() {
+        mockedStaticUniversityDatabaseWrapper = mockStatic(UniversityDatabaseWrapper.class);
         studentManagerUnderTest = new StudentManager();
     }
 
     @AfterEach
     void tearDown() {
+        mockedStaticUniversityDatabaseWrapper.close();
     }
 
     @Test
@@ -40,6 +46,7 @@ class StudentManagerTest {
         // given
         Student mockStudent = mock(Student.class);
         Course mockCourse = mock(Course.class);
+        mockedStaticUniversityDatabaseWrapper.when(() -> UniversityDatabaseWrapper.assignCourse(mockStudent, mockCourse)).thenReturn(true);
 
         // when
         boolean result = studentManagerUnderTest.assignCourse(mockStudent, mockCourse);
