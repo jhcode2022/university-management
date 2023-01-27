@@ -12,6 +12,17 @@ YEAR_PERSONTYPE_DEPARTMENT_SEQUENCE
 class StudentTest {
 
     @Test
+    void constructor_IncorrectPersonTypeInId() {
+        // given
+        long id = 2023_10_301_0001L;
+        String name = "John Doe";
+
+        // when
+        // then
+        assertThrows(IllegalArgumentException.class, () -> new Student(id, name));
+    }
+
+    @Test
     void getId() {
         // given
         long id = 2023_20_301_0001L;
