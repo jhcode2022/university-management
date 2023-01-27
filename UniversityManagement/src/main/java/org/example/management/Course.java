@@ -10,11 +10,11 @@ public class Course {
         return null;
     }
 
-    public void assignStudent(Student student) {
+    void assignStudent(Student student) {
         // TODO: implement this
     }
 
-    public void assignProfessor(Professor professor) {
+    void assignProfessor(Professor professor) {
         // TODO: implement this
     }
 }

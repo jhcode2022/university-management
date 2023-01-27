@@ -14,8 +14,7 @@ public class Professor implements IPerson {
         return null;
     }
 
-    @Override
-    public void assignCourse(Course course) {
+    void assignCourse(Course course) {
 
     }
 

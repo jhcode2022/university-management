@@ -2,7 +2,6 @@ package org.example.management;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 import org.example.datatype.Department;
 import org.example.db.UniversityDatabaseWrapper;
 
@@ -29,13 +28,8 @@ public class StudentManager implements IPersonManager {
         if (!isCourseAssignTransactionSuccessful) {
             return false;
         }
-        person.assignCourse(course);
+        ((Student) person).assignCourse(course);
         course.assignStudent((Student) person);
         return true;
-    }
-
-    @Override
-    public List<Course> getCourses(IPerson person) {
-        return person.getCourses();
     }
 }

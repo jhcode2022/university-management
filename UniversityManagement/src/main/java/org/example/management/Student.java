@@ -28,8 +28,7 @@ public class Student implements IPerson {
         return name;
     }
 
-    @Override
-    public void assignCourse(Course course) {
+    void assignCourse(Course course) {
 
     }
 
