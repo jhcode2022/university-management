@@ -1,5 +1,7 @@
 package org.example.management;
 
+import java.util.List;
+
 public class Professor implements IPerson {
 
     @Override
@@ -15,5 +17,10 @@ public class Professor implements IPerson {
     @Override
     public void assignCourse(Course course) {
 
+    }
+
+    @Override
+    public List<Course> getCourses() {
+        return null;
     }
 }

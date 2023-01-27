@@ -1,10 +1,13 @@
 package org.example.management;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.verify;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.example.datatype.Department;
 import org.example.db.UniversityDatabaseWrapper;
 import org.junit.jupiter.api.AfterEach;
@@ -59,5 +62,21 @@ class StudentManagerTest {
 
     @Test
     void getCourses() {
+        // given
+        Student mockStudent = mock(Student.class);
+        Course mockCourse1 = mock(Course.class);
+        Course mockCourse2 = mock(Course.class);
+        List<Course> coursesForTesting = new ArrayList<>();
+        coursesForTesting.add(mockCourse1);
+        coursesForTesting.add(mockCourse2);
+        doReturn(coursesForTesting).when(mockStudent).getCourses();
+
+        // when
+        List<Course> courses = studentManagerUnderTest.getCourses(mockStudent);
+
+        // then
+        assertEquals(2, courses.size());
+        assertTrue(courses.contains(mockCourse1));
+        assertTrue(courses.contains(mockCourse2));
     }
 }

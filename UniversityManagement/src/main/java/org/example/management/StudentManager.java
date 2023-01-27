@@ -36,6 +36,6 @@ public class StudentManager implements IPersonManager {
 
     @Override
     public List<Course> getCourses(IPerson person) {
-        return null;
+        return person.getCourses();
     }
 }

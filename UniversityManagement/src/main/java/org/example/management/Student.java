@@ -1,5 +1,6 @@
 package org.example.management;
 
+import java.util.List;
 import org.example.datatype.Department;
 
 public class Student implements IPerson {
@@ -30,6 +31,11 @@ public class Student implements IPerson {
     @Override
     public void assignCourse(Course course) {
 
+    }
+
+    @Override
+    public List<Course> getCourses() {
+        return null;
     }
 
     private boolean isValidId(long id) {
