@@ -1,11 +1,12 @@
 package org.example.management;
 
 import java.util.List;
+import org.example.datatype.Department;
 
 public class ProfessorManager implements IPersonManager {
 
     @Override
-    public IPerson createPerson() {
+    public IPerson createPerson(String name, Department department) {
         return null;
     }
 

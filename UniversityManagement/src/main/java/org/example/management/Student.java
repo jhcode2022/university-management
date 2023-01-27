@@ -4,7 +4,7 @@ import org.example.datatype.Department;
 
 public class Student implements IPerson {
 
-    private static final int PERSON_TYPE_STUDENT = 20;
+    public static final int PERSON_TYPE_STUDENT = 20;
 
     private final long id;
     private final String name;
