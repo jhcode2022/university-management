@@ -1,5 +1,7 @@
 package org.example.management;
 
+import org.example.datatype.Department;
+
 public class Student implements IPerson {
 
     private static final int PERSON_TYPE_STUDENT = 20;
@@ -27,7 +29,16 @@ public class Student implements IPerson {
 
     private boolean isValidId(long id) {
         int personType = (int) (id % 1_00_000_0000L / 1_000_0000L);
-        System.out.println("personType: " + personType);
-        return personType == PERSON_TYPE_STUDENT;
+        if (personType != PERSON_TYPE_STUDENT) {
+            return false;
+        }
+
+        int departmentId = (int) (id % 1_000_0000L / 1_0000L);
+        System.out.println("departmentId: " + departmentId);
+        if (Department.getDepartment(departmentId) == null) {
+            return false;
+        }
+
+        return true;
     }
 }
