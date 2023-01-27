@@ -27,6 +27,11 @@ public class Student implements IPerson {
         return name;
     }
 
+    @Override
+    public void assignCourse(Course course) {
+
+    }
+
     private boolean isValidId(long id) {
         int personType = (int) (id % 1_00_000_0000L / 1_000_0000L);
         if (personType != PERSON_TYPE_STUDENT) {

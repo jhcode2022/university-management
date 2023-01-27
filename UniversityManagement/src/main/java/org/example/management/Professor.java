@@ -11,4 +11,9 @@ public class Professor implements IPerson {
     public String getName() {
         return null;
     }
+
+    @Override
+    public void assignCourse(Course course) {
+
+    }
 }

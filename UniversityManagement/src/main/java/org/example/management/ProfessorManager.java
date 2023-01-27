@@ -11,6 +11,11 @@ public class ProfessorManager implements IPersonManager {
     }
 
     @Override
+    public boolean assignCourse(IPerson person, Course course) {
+        return false;
+    }
+
+    @Override
     public List<Course> getCourses(IPerson person) {
         return null;
     }

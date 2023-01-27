@@ -22,6 +22,19 @@ public class StudentManager implements IPersonManager {
     }
 
     @Override
+    public boolean assignCourse(IPerson person, Course course) {
+        assert(person instanceof Student);
+
+        boolean isCourseAssignTransactionSuccessful = UniversityDatabaseWrapper.assignCourse(person, course);
+        if (!isCourseAssignTransactionSuccessful) {
+            return false;
+        }
+        person.assignCourse(course);
+        course.assignStudent((Student) person);
+        return true;
+    }
+
+    @Override
     public List<Course> getCourses(IPerson person) {
         return null;
     }
