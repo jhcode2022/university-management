@@ -1,6 +1,8 @@
 package org.example.util;
 
 import org.example.datatype.Department;
+import org.example.management.Professor;
+import org.example.management.Student;
 
 /*
 Professor ID format:
@@ -13,23 +15,50 @@ YEAR_PERSONTYPE_DEPARTMENT_SEQUENCE
 2023_20_301_0001
  */
 public class IdParser {
-    public static int getIdType() {
-        return 0;
+    public static int getIdType(long id) {
+        if (id >= 10_000_000_000L) {
+            return Student.PERSON_TYPE_STUDENT;
+        } else {
+            return Professor.PERSON_TYPE_PROFESSOR;
+        }
     }
 
-    public static int getYear() {
-        return 0;
+    public static int getYear(long id) {
+        if (getIdType(id) == Student.PERSON_TYPE_STUDENT) {
+            int year = (int) (id % 1_0000_00_000_0000L / 1_00_000_0000L);
+            return year;
+        } else if (getIdType(id) == Professor.PERSON_TYPE_PROFESSOR) {
+            throw new IllegalArgumentException("Professor ID format does not have year information!");
+        } else {
+            throw new IllegalArgumentException("Unknown ID format!");
+        }
     }
 
-    public static Department getDepartment() {
-        return null;
+    public static Department getDepartment(long id) {
+        if (getIdType(id) == Student.PERSON_TYPE_STUDENT) {
+            int departmentId = (int) (id % 1_000_0000L / 1_0000L);
+            return Department.getDepartment(departmentId);
+        } else if (getIdType(id) == Professor.PERSON_TYPE_PROFESSOR) {
+            int departmentId = (int) (id % 1_000_00000L / 1_00000);
+            return Department.getDepartment(departmentId);
+        } else {
+            throw new IllegalArgumentException("Unknown ID format!");
+        }
     }
 
-    public static int getSequence() {
-        return 0;
+    public static int getSequence(long id) {
+        if (getIdType(id) == Student.PERSON_TYPE_STUDENT) {
+            int sequence = (int) (id % 1_0000L);
+            return sequence;
+        } else if (getIdType(id) == Professor.PERSON_TYPE_PROFESSOR) {
+            int sequence = (int) (id % 1_00000L);
+            return sequence;
+        } else {
+            throw new IllegalArgumentException("Unknown ID format!");
+        }
     }
 
-    public static boolean isIdValid() {
+    public static boolean isIdValid(long id) {
         return false;
     }
 }
