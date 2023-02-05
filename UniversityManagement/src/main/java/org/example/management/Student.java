@@ -41,7 +41,8 @@ public class Student implements IPerson {
     }
 
     private boolean isValidId(long id) {
-        int personType = (int) (id % 1_00_000_0000L / 1_000_0000L);
+        int personType = (int) (id % 10_000_00000L / 1_000_00000L);
+        System.out.println("personType: " + personType);
         if (personType != PERSON_TYPE_STUDENT) {
             return false;
         }
