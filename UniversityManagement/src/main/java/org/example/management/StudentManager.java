@@ -7,9 +7,14 @@ import org.example.db.UniversityDatabaseWrapper;
 
 public class StudentManager implements IPersonManager {
 
+    private Calendar calendar;
+
+    public void setCalendar(Calendar calendar) {
+        this.calendar = calendar;
+    }
+
     @Override
     public IPerson createPerson(String name, Department department) {
-        Calendar calendar = new GregorianCalendar();
         int year = calendar.get(Calendar.YEAR);
         int personType = Student.PERSON_TYPE_STUDENT;
         int departmentId = department.getId();

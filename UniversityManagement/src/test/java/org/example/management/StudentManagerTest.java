@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -50,12 +51,13 @@ class StudentManagerTest {
         // given
         String name = "John Doe";
         int testLastSequence = 1234;
-        Calendar calendar = new GregorianCalendar();
-        int currentYear = calendar.get(Calendar.YEAR);
+        Calendar mockCalendar = mock(Calendar.class);
+        when(mockCalendar.get(Calendar.YEAR)).thenReturn(2020);
         mockedStaticUniversityDatabaseWrapper.when(() -> UniversityDatabaseWrapper.savePerson(any(IPerson.class))).thenReturn(true);
         mockedStaticUniversityDatabaseWrapper.when(() -> UniversityDatabaseWrapper.getLastSequence(Student.PERSON_TYPE_STUDENT, Department.COMPUTER_SCIENCE)).thenReturn(testLastSequence);
 
         // when
+        studentManagerUnderTest.setCalendar(mockCalendar);
         IPerson person = studentManagerUnderTest.createPerson(name, Department.COMPUTER_SCIENCE);
 
         // then
@@ -67,7 +69,7 @@ class StudentManagerTest {
         assertTrue((id / 1000_00_000_0000L) > 1);
         // check year
         int year = (int) (id % 1_0000_00_000_0000L / 1_00_000_0000L);
-        assertEquals(currentYear, year);
+        assertEquals(2020, year);
         // check personType
         int personType = (int) (id % 1_00_000_0000L / 1_000_0000L);
         assertEquals(Student.PERSON_TYPE_STUDENT, personType);
