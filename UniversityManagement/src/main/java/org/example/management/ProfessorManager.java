@@ -4,15 +4,14 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import org.example.datatype.Department;
 import org.example.db.UniversityDatabaseWrapper;
+import org.example.util.IdParser;
 
 public class ProfessorManager implements IPersonManager {
 
     @Override
     public IPerson createPerson(String name, Department department) {
-        int personType = Professor.PERSON_TYPE_PROFESSOR;
-        int departmentId = department.getId();
         int nextAvailableSequence = UniversityDatabaseWrapper.getLastSequence(Professor.PERSON_TYPE_PROFESSOR, department) + 1;
-        long id = personType * 1_000_00000L + departmentId * 1_00000L + nextAvailableSequence;
+        long id = IdParser.generateId(-1, Professor.PERSON_TYPE_PROFESSOR, department, nextAvailableSequence);
         Professor professor = new Professor(id, name);
         return professor;
     }
