@@ -42,6 +42,7 @@ public class Professor implements IPerson {
 
     private boolean isValidId(long id) {
         int personType = (int) (id % 1_00_000_00000L / 1_000_00000L);
+        System.out.println("personType: " + personType);
         if (personType != PERSON_TYPE_PROFESSOR) {
             return false;
         }
