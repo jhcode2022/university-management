@@ -14,6 +14,19 @@ YEAR_PERSONTYPE_DEPARTMENT_SEQUENCE
 class StudentTest {
 
     @Test
+    void constructor_Valid() {
+        // given
+        long id = 2023_10_301_0001L;
+        String name = "John Doe";
+
+        // when
+        Student student = new Student(id, name);
+
+        // then
+        assertNotNull(student);
+    }
+
+    @Test
     void constructor_IncorrectPersonTypeInId() {
         // given
         long id = 2023_10_301_0001L;
