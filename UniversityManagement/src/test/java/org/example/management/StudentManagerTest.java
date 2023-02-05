@@ -44,6 +44,38 @@ class StudentManagerTest {
     }
 
     @Test
+    void createPerson_IdIsValid() {
+        // given
+        String name = "John Doe";
+        int testLastSequence = 1234;
+        mockedStaticUniversityDatabaseWrapper.when(() -> UniversityDatabaseWrapper.savePerson(any(IPerson.class))).thenReturn(true);
+        mockedStaticUniversityDatabaseWrapper.when(() -> UniversityDatabaseWrapper.getLastSequence(Student.PERSON_TYPE_STUDENT, Department.COMPUTER_SCIENCE)).thenReturn(testLastSequence);
+
+        // when
+        IPerson person = studentManagerUnderTest.createPerson(name, Department.COMPUTER_SCIENCE);
+
+        // then
+        assertTrue(person instanceof Student);
+        assertEquals(name, person.getName());
+        long id = person.getId();
+        // check ID length
+        assertEquals(0, id / 1_0000_00_000_0000L);
+        assertTrue((id / 1000_00_000_0000L) > 1);
+        // check year
+        int year = (int) (id % 1_0000_00_000_0000L / 1_00_000_0000L);
+        assertEquals(2023, year);
+        // check personType
+        int personType = (int) (id % 1_00_000_0000L / 1_000_0000L);
+        assertEquals(Student.PERSON_TYPE_STUDENT, personType);
+        // check departmentId
+        int departmentId = (int) (id % 1_000_0000L / 1_0000L);
+        assertEquals(Department.COMPUTER_SCIENCE.getId(), departmentId);
+        // check sequence
+        int sequence = (int) (id % 1_0000L);
+        assertEquals(testLastSequence + 1, sequence);
+    }
+
+    @Test
     void createPerson_handleDbSaveFail() {
         // given
         String name = "John Doe";
