@@ -6,6 +6,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.verify;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import org.example.datatype.Department;
 import org.example.db.UniversityDatabaseWrapper;
 import org.junit.jupiter.api.AfterEach;
@@ -48,6 +50,8 @@ class StudentManagerTest {
         // given
         String name = "John Doe";
         int testLastSequence = 1234;
+        Calendar calendar = new GregorianCalendar();
+        int currentYear = calendar.get(Calendar.YEAR);
         mockedStaticUniversityDatabaseWrapper.when(() -> UniversityDatabaseWrapper.savePerson(any(IPerson.class))).thenReturn(true);
         mockedStaticUniversityDatabaseWrapper.when(() -> UniversityDatabaseWrapper.getLastSequence(Student.PERSON_TYPE_STUDENT, Department.COMPUTER_SCIENCE)).thenReturn(testLastSequence);
 
@@ -63,7 +67,7 @@ class StudentManagerTest {
         assertTrue((id / 1000_00_000_0000L) > 1);
         // check year
         int year = (int) (id % 1_0000_00_000_0000L / 1_00_000_0000L);
-        assertEquals(2023, year);
+        assertEquals(currentYear, year);
         // check personType
         int personType = (int) (id % 1_00_000_0000L / 1_000_0000L);
         assertEquals(Student.PERSON_TYPE_STUDENT, personType);
