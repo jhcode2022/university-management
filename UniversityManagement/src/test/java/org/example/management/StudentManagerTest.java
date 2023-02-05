@@ -1,6 +1,7 @@
 package org.example.management;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.verify;
@@ -32,6 +33,7 @@ class StudentManagerTest {
     void createPerson() {
         // given
         String name = "John Doe";
+        mockedStaticUniversityDatabaseWrapper.when(() -> UniversityDatabaseWrapper.savePerson(any(IPerson.class))).thenReturn(true);
 
         // when
         IPerson person = studentManagerUnderTest.createPerson(name, Department.COMPUTER_SCIENCE);
@@ -39,6 +41,19 @@ class StudentManagerTest {
         // then
         assertTrue(person instanceof Student);
         assertEquals(name, person.getName());
+    }
+
+    @Test
+    void createPerson_handleDbSaveFail() {
+        // given
+        String name = "John Doe";
+        mockedStaticUniversityDatabaseWrapper.when(() -> UniversityDatabaseWrapper.savePerson(any(IPerson.class))).thenReturn(false);
+
+        // when
+        IPerson person = studentManagerUnderTest.createPerson(name, Department.COMPUTER_SCIENCE);
+
+        // then
+        assertNull(person);
     }
 
     @Test
@@ -56,24 +71,4 @@ class StudentManagerTest {
         verify(mockStudent).assignCourse(mockCourse);
         verify(mockCourse).assignStudent(mockStudent);
     }
-
-//    @Test
-//    void getCourses() {
-//        // given
-//        Student mockStudent = mock(Student.class);
-//        Course mockCourse1 = mock(Course.class);
-//        Course mockCourse2 = mock(Course.class);
-//        List<Course> coursesForTesting = new ArrayList<>();
-//        coursesForTesting.add(mockCourse1);
-//        coursesForTesting.add(mockCourse2);
-//        doReturn(coursesForTesting).when(mockStudent).getCourses();
-//
-//        // when
-//        List<Course> courses = studentManagerUnderTest.getCourses(mockStudent);
-//
-//        // then
-//        assertEquals(2, courses.size());
-//        assertTrue(courses.contains(mockCourse1));
-//        assertTrue(courses.contains(mockCourse2));
-//    }
 }

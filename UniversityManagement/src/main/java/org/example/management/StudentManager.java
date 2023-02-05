@@ -16,7 +16,9 @@ public class StudentManager implements IPersonManager {
         int nextAvailableSequence = UniversityDatabaseWrapper.getLastSequence(Student.PERSON_TYPE_STUDENT, department) + 1;
         long id = year * 1_00_000_0000L + personType * 1_000_0000L + departmentId * 1_0000L + nextAvailableSequence;
         Student student = new Student(id, name);
-        UniversityDatabaseWrapper.savePerson(student);
+        if (!UniversityDatabaseWrapper.savePerson(student)) {
+            return null;
+        }
         return student;
     }
 
