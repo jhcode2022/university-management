@@ -13,7 +13,7 @@ public class StudentManager implements IPersonManager {
         int year = calendar.get(Calendar.YEAR);
         int personType = Student.PERSON_TYPE_STUDENT;
         int departmentId = department.getId();
-        int nextAvailableSequence = UniversityDatabaseWrapper.getLastSequence(Student.PERSON_TYPE_STUDENT) + 1;
+        int nextAvailableSequence = UniversityDatabaseWrapper.getLastSequence(Student.PERSON_TYPE_STUDENT, department) + 1;
         long id = year * 1_00_000_0000L + personType * 1_000_0000L + departmentId * 1_0000L + nextAvailableSequence;
         Student student = new Student(id, name);
         UniversityDatabaseWrapper.savePerson(student);

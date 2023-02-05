@@ -1,5 +1,6 @@
 package org.example.management;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.example.datatype.Department;
 
@@ -9,6 +10,7 @@ public class Student implements IPerson {
 
     private final long id;
     private final String name;
+    private final List<Course> courses;
 
     Student(long id, String name) {
         if (!isValidId(id)) {
@@ -16,6 +18,7 @@ public class Student implements IPerson {
         }
         this.id = id;
         this.name = name;
+        this.courses = new ArrayList<>();
     }
 
     @Override
@@ -29,12 +32,12 @@ public class Student implements IPerson {
     }
 
     void assignCourse(Course course) {
-
+        courses.add(course);
     }
 
     @Override
     public List<Course> getCourses() {
-        return null;
+        return courses;
     }
 
     private boolean isValidId(long id) {

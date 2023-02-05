@@ -1,7 +1,9 @@
 package org.example.management;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 /*
@@ -57,5 +59,38 @@ class StudentTest {
 
         // then
         assertEquals(name, student.getName());
+    }
+
+    @Test
+    void getCourses_Empty() {
+        // given
+        long id = 2023_20_301_0001L;
+        String name = "John Doe";
+        Student student = new Student(id, name);
+
+        // when
+        List<Course> result = student.getCourses();
+
+        // then
+        assertNotNull(result);
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void getCourses_OneCourse() {
+        // given
+        long id = 2023_20_301_0001L;
+        String name = "John Doe";
+        Student student = new Student(id, name);
+        Course mockCourse = mock(Course.class);
+        student.assignCourse(mockCourse);
+
+        // when
+        List<Course> result = student.getCourses();
+
+        // then
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals(mockCourse, result.get(0));
     }
 }
