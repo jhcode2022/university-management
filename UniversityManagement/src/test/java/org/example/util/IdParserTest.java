@@ -106,4 +106,34 @@ class IdParserTest {
     @Test
     void isIdValid() {
     }
+
+    @Test
+    void generateId_Professor() {
+        // given
+        int year = 2023;
+        int personType = Professor.PERSON_TYPE_PROFESSOR;
+        Department department = Department.COMPUTER_SCIENCE;
+        int sequence = 12345;
+
+        // when
+        long id = IdParser.generateId(year, personType, department, sequence);
+
+        // then
+        assertEquals(10_301_12345L, id);
+    }
+
+    @Test
+    void generateId_Student() {
+        // given
+        int year = 2023;
+        int personType = Student.PERSON_TYPE_STUDENT;
+        Department department = Department.COMPUTER_SCIENCE;
+        int sequence = 1234;
+
+        // when
+        long id = IdParser.generateId(year, personType, department, sequence);
+
+        // then
+        assertEquals(2023_20_301_1234L, id);
+    }
 }
