@@ -5,10 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import org.example.datatype.Department;
 import org.example.db.UniversityDatabaseWrapper;
 import org.junit.jupiter.api.AfterEach;
@@ -51,13 +48,11 @@ class StudentManagerTest {
         // given
         String name = "John Doe";
         int testLastSequence = 1234;
-        Calendar mockCalendar = mock(Calendar.class);
-        when(mockCalendar.get(Calendar.YEAR)).thenReturn(2020);
         mockedStaticUniversityDatabaseWrapper.when(() -> UniversityDatabaseWrapper.savePerson(any(IPerson.class))).thenReturn(true);
         mockedStaticUniversityDatabaseWrapper.when(() -> UniversityDatabaseWrapper.getLastSequence(Student.PERSON_TYPE_STUDENT, Department.COMPUTER_SCIENCE)).thenReturn(testLastSequence);
 
         // when
-        studentManagerUnderTest.setCalendar(mockCalendar);
+        studentManagerUnderTest.setCurrentYear(2020);
         IPerson person = studentManagerUnderTest.createPerson(name, Department.COMPUTER_SCIENCE);
 
         // then
